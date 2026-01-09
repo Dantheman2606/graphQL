@@ -17,12 +17,29 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
+
+interface LoginData {
+    login: {
+        jwt: string;
+        user: {
+            id: string;
+            username: string;
+            email: string;
+        };
+    };
+}
+
+interface LoginVars {
+    identifier: string;
+    password: string;
+}
+
 export default function Login() {
     const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
 
-    const [loginMutation, { loading }] = useMutation(LOGIN_MUTATION);
+    const [loginMutation, { loading }] = useMutation<LoginData, LoginVars>(LOGIN_MUTATION);
     const { login } = useAuth();
     const navigate = useNavigate();
 

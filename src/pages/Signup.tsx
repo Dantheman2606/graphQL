@@ -17,13 +17,31 @@ const REGISTER_MUTATION = gql`
   }
 `;
 
+
+interface RegisterData {
+    register: {
+        jwt: string;
+        user: {
+            id: string;
+            username: string;
+            email: string;
+        };
+    };
+}
+
+interface RegisterVars {
+    username: string;
+    email: string;
+    password: string;
+}
+
 export default function Signup() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
 
-    const [registerMutation, { loading }] = useMutation(REGISTER_MUTATION);
+    const [registerMutation, { loading }] = useMutation<RegisterData, RegisterVars>(REGISTER_MUTATION);
     const { login } = useAuth();
     const navigate = useNavigate();
 
